@@ -153,7 +153,7 @@ DROP TABLE users;
    second.
 
 #### Example
-
+Let's insert one user into the table with name 'John Doe'.
 ```postgresql
 INSERT INTO users (telegram_id, full_name, created_at)
 VALUES (123456789, 'John Doe', '2020-01-01 00:00:00');
@@ -192,6 +192,7 @@ INSERT 0 1
 but [this is not recommended.](https://www.red-gate.com/hub/product-learning/sql-prompt/finding-code-smells-using-sql-prompt-asterisk-select-list)
 
 #### Example 1:
+Let's select all users from the table.
 
 ```postgresql
 SELECT telegram_id
@@ -207,7 +208,7 @@ telegram_id
 ```
 
 #### Example 2:
-
+Let's select all users from the table where their telegram_id is 123456789.
 ```postgresql
 SELECT *
 FROM users
@@ -236,7 +237,7 @@ WHERE telegram_id = 123456789;
 5. Then you write condition if you want to filter data. _Example: `WHERE full_name = 'John Doe'`_
 
 #### Example
-
+Let's update the full name of the user with telegram_id `123456789` to `John Moe`.
 ```postgresql
 UPDATE users
 SET full_name = 'John Moe'
@@ -260,7 +261,7 @@ UPDATE 1
 3. Then you write condition if you want to filter data. _Example: `WHERE full_name = 'John Doe'`_
 
 #### Example
-
+Let's delete the user with telegram_id `123456789`.
 ```postgresql
 DELETE
 FROM users

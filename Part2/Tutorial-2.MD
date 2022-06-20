@@ -3,6 +3,7 @@
 This is not a full tutorial, it's just a brief introduction to PostgreSQL and a script for video-tutorial.
 
 # Part 2
+
 ## Ordering Data
 
 You can sort data in PostgreSQL using the `ORDER BY` clause with `SELECT` statement.
@@ -16,7 +17,7 @@ You can sort data in PostgreSQL using the `ORDER BY` clause with `SELECT` statem
 > - You can also sort in descending or ascending order by adding `DESC` or `ASC` after the column name.
 
 #### Example
-
+Let's select all records from the `users` table and sort them by their `telegram_id` column in descending order.
 ```postgresql
 SELECT *
 FROM users
@@ -49,17 +50,17 @@ You can use different mathematical functions to aggregate data in PostgreSQL:
 
 ## Grouping Data
 
-You can apply aggregation functions to colunmns and divide the result into groups by using the `GROUP BY` clause
-with `SELECT` statement. 
+You can apply aggregation functions to columns and divide the result into groups by using the `GROUP BY` clause
+with `SELECT` statement.
 
 > Syntax: `SELECT column_to_divide_by, aggregate_func(column_to_aggreage) FROM table_name GROUP BY column_to_divide_by;`
 
 > **Note:**
-> 
+>
 > It is not necessary to use aggregation functions with `GROUP BY`, it will group and remove the
-duplicates from the result. But you will need to list all columns in the `GROUP BY` clause.
+> duplicates from the result. But you will need to list all columns in the `GROUP BY` clause.
 
-For this example we will add another column to the table `users` called `role` 
+For this example we will add another column to the table `users` called `role`
 and set it to `admin` for the first two users, with the default value `user` for the rest:
 
 ```postgresql
@@ -72,7 +73,7 @@ WHERE telegram_id in (1, 2);
 ```
 
 #### Example
-
+Let's count the users by their role:
 ```postgresql
 SELECT role, COUNT(telegram_id)
 FROM users
