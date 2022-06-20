@@ -14,7 +14,7 @@ This is not a full tutorial, it's just a brief introduction to PostgreSQL and a 
 
 Example of a table:
 
-![img.png](img.png)
+![img.png](../img.png)
 
 #### In this example you have 3 columns:
 
