@@ -2,7 +2,7 @@
 
 This is not a full tutorial, it's just a brief introduction to PostgreSQL and a script for video-tutorial.
 
-# Part 1
+# Part 1. Basics.
 ## How data is stored in PostgreSQL?
 
 - To store information in a database, you need to create a **table**.
@@ -36,6 +36,10 @@ Every action in PostgreSQL is performed by some SQL statement.
 <action> <table_name> <condition>;
 ...
 ```
+> **Note:**
+> 
+> - SQL **commands are case-insensitive**. You can write `SELECT`/`select`/`Select` and all will work.
+> - **Indentation is unimportant**. You can put newlines and tabs wherever you want.
 
 ### Actions
 
@@ -91,7 +95,7 @@ CREATE TABLE users
 );
 ```
 
-#### Response
+##### Response
 
 ```
 CREATE TABLE
@@ -159,7 +163,7 @@ INSERT INTO users (telegram_id, full_name, created_at)
 VALUES (123456789, 'John Doe', '2020-01-01 00:00:00');
 ```
 
-#### Response
+##### Response
 
 ```
 INSERT 0 1
@@ -199,7 +203,7 @@ SELECT telegram_id
 FROM users;
 ```
 
-#### Response:
+##### Response:
 
 ```
 telegram_id 
@@ -215,7 +219,7 @@ FROM users
 WHERE telegram_id = 123456789;
 ```
 
-#### Response:
+##### Response:
 
 ```
  telegram_id | full_name |     created_at      
@@ -244,7 +248,7 @@ SET full_name = 'John Moe'
 WHERE telegram_id = 123456789;
 ```
 
-#### Response
+##### Response
 
 ```
 UPDATE 1
@@ -268,7 +272,7 @@ FROM users
 WHERE telegram_id = 123456789;
 ```
 
-#### Response
+##### Response
 
 ```
 DELETE 1
