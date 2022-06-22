@@ -226,15 +226,15 @@ However, now we specify `ON DELETE CASCADE` for the `user_id` column.
 This means that if we delete a user, all his orders will be deleted as well.
 
 ```postgresql
-    CREATE TABLE orders
-    (
-        order_id   SERIAL PRIMARY KEY,
-        user_id    BIGINT NOT NULL,
-        created_at TIMESTAMP DEFAULT NOW(),
-        FOREIGN KEY (user_id)
-            REFERENCES users (telegram_id)
-            ON DELETE CASCADE
-    );
+CREATE TABLE orders
+(
+    order_id   SERIAL PRIMARY KEY,
+    user_id    BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (user_id)
+        REFERENCES users (telegram_id)
+        ON DELETE CASCADE
+);
 ```
 
 #### Example:
@@ -242,17 +242,17 @@ This means that if we delete a user, all his orders will be deleted as well.
 Let's create an order for the user with the id `1`.
 
 ```postgresql
-    INSERT INTO orders (user_id)
-    VALUES (1)
-    RETURNING order_id;
+INSERT INTO orders (user_id)
+VALUES (1)
+RETURNING order_id;
 ```
 
 Now let's list all the orders and their owners.
 
 ```postgresql
-    SELECT orders.order_id, users.full_name
-    FROM orders
-             JOIN users ON users.telegram_id = orders.user_id;
+SELECT orders.order_id, users.full_name
+FROM orders
+         JOIN users ON users.telegram_id = orders.user_id;
 ```
 
 ##### Response:
