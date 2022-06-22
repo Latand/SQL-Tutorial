@@ -124,7 +124,9 @@ Here we have 3 orders with 1 product in 1st, 3 products in 2nd order and 2 produ
 Now we need to create these tables with the correct relationships. We need to create a `foreign key` for each table that
 references the primary key of the other table.
 
-To remind you, the primary key is the column that automatically sets the
+> **Note:** 
+> 
+> To remind you, the primary key is the column that automatically sets the
 `NOT NULL` and `UNIQUE` constraints and is used to identify each record.
 
 ```
