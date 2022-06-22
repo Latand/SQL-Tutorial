@@ -165,7 +165,7 @@ column of the `users` table.
 > Also, we have a `ON DELETE SET NULL` setting that automatically sets the `referrer_id` column to `NULL` if the user
 > with the specified `telegram_id` is deleted by other commands.
 
-> There are other options for the `ON DELETE` setting, but we will not use them in this tutorial.
+> There are other options for the `ON DELETE` setting, but we will not use them all in this tutorial.
 > - `ON DELETE CASCADE` - Will delete the user record if the user with the specified referred record is deleted.
 > - `ON DELETE RESTRICT` - Will reject the command to delete **the referrer record**.
 > - `ON DELETE NO ACTION` - Will do nothing.
