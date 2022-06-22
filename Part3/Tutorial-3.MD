@@ -191,7 +191,7 @@ VALUES (2, 'Jane Doe', 'jane', 'en', '2020-01-02', 1);
 
 Now we can join tables to get the second user and his referrer.
 
-> You will learn about different types of joins later.
+> You can learn about different types of joins in other tutorials. We won't cover them here.
 
 > Syntax: `SELECT table1.column1, ... FROM table1 JOIN table2 ON table2.primary_key = table1.foreign_key`
 
