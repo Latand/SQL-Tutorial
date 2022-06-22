@@ -303,8 +303,8 @@ You can see that we created two `FOREIGN KEY`'s. Each one references the primary
 
 > We also added `ON DELETE CASCADE` setting to delete the record if the order is deleted.
 
-> We also added `ON DELETE RESTRICT` setting to **reject the command to delete the product** if there are created orders
-> with it.
+> We also added `ON DELETE RESTRICT` setting to **reject the command to delete the product** if database contains orders
+> with this product.
 
 #### Example:
 
