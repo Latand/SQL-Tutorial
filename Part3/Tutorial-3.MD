@@ -125,7 +125,7 @@ Now we need to create these tables with the correct relationships. We need to cr
 references the primary key of the other table.
 
 To remind you, the primary key is the column that automatically sets the
-not null and unique constraints and is used to identify each record.
+`NOT NULL` and `UNIQUE` constraints and is used to identify each record.
 
 ```
 [CONSTRAINT fk_name]
