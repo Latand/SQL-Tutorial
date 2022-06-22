@@ -3,6 +3,7 @@
 This is not a full tutorial, it's just a brief introduction to PostgreSQL and a script for video-tutorial.
 
 # Part 1. Basics.
+
 ## How data is stored in PostgreSQL?
 
 - To store information in a database, you need to create a **table**.
@@ -36,8 +37,9 @@ Every action in PostgreSQL is performed by some SQL statement.
 <action> <table_name> <condition>;
 ...
 ```
+
 > **Note:**
-> 
+>
 > - SQL **commands are case-insensitive**. You can write `SELECT`/`select`/`Select` and all will work.
 > - **Indentation is unimportant**. You can put newlines and tabs wherever you want.
 
@@ -65,13 +67,16 @@ Firstly, to perform some action you need to create a table.
 5. Determine which [constraints](https://www.tutorialspoint.com/postgresql/postgresql_constraints.htm) you want to apply
    to your table. _Example: You can use `PRIMARY KEY` to make sure that each row has a unique and not empty identifier.
    In this example it is `telegram_id`_
+6. If you want to create a `PRIMARY KEY` that will be automatically filled `(e.g. 1, 2, 3 ...)`, you can use `SERIAL`
+   datatype with `PRIMARY KEY`.
+   _Example: `telegram_id SERIAL PRIMARY KEY`_
 
 > Syntax: `CREATE TABLE table_name (column_name data_type, column_name data_type, ...);`
 
 > **Note:**
 >
 > You can set the default value of a column by adding a `DEFAULT` clause after the data type.
-> 
+>
 > You can set additional constraints for a column.
 
 #### To create a table you need to:
@@ -85,6 +90,9 @@ Firstly, to perform some action you need to create a table.
 4. Then you close the parenthesis.
 
 #### Example
+
+Let's create a table called `users` for storing data about registered telegram users. We will use `BIGINT`
+for `telegram_id` instead of `INTEGER` because it has to be 64bit.
 
 ```postgresql
 CREATE TABLE users
@@ -157,7 +165,9 @@ DROP TABLE users;
    second.
 
 #### Example
+
 Let's insert one user into the table with name 'John Doe'.
+
 ```postgresql
 INSERT INTO users (telegram_id, full_name, created_at)
 VALUES (123456789, 'John Doe', '2020-01-01 00:00:00');
@@ -196,6 +206,7 @@ INSERT 0 1
 but [this is not recommended.](https://www.red-gate.com/hub/product-learning/sql-prompt/finding-code-smells-using-sql-prompt-asterisk-select-list)
 
 #### Example 1:
+
 Let's select all users from the table.
 
 ```postgresql
@@ -212,7 +223,9 @@ telegram_id
 ```
 
 #### Example 2:
+
 Let's select all users from the table where their telegram_id is 123456789.
+
 ```postgresql
 SELECT *
 FROM users
@@ -241,7 +254,9 @@ WHERE telegram_id = 123456789;
 5. Then you write condition if you want to filter data. _Example: `WHERE full_name = 'John Doe'`_
 
 #### Example
+
 Let's update the full name of the user with telegram_id `123456789` to `John Moe`.
+
 ```postgresql
 UPDATE users
 SET full_name = 'John Moe'
@@ -265,7 +280,9 @@ UPDATE 1
 3. Then you write condition if you want to filter data. _Example: `WHERE full_name = 'John Doe'`_
 
 #### Example
+
 Let's delete the user with telegram_id `123456789`.
+
 ```postgresql
 DELETE
 FROM users
