@@ -124,8 +124,8 @@ Here we have 3 orders with 1 product in 1st, 3 products in 2nd order and 2 produ
 Now we need to create these tables with the correct relationships. We need to create a `foreign key` for each table that
 references the primary key of the other table.
 
-> **Note:** 
-> 
+> **Note:**
+>
 > To remind you, the primary key is the column that automatically sets the
 `NOT NULL` and `UNIQUE` constraints and is used to identify each record.
 
@@ -138,6 +138,14 @@ references the primary key of the other table.
 ```
 
 ### Table users:
+
+First, if you have created `users` table from the previous lessons you will need to delete it.
+
+```postgresql
+DROP TABLE IF EXISTS users;
+```
+
+Now, we will create a new table with the following columns:
 
 ```postgresql
 CREATE TABLE users
@@ -239,12 +247,20 @@ CREATE TABLE orders
 
 #### Example:
 
-Let's create an order for the user with the id `1`.
+Let's create an order for the user with the id `1`. We also add `RETURNING` setting to get the new order id:
 
 ```postgresql
 INSERT INTO orders (user_id)
 VALUES (1)
 RETURNING order_id;
+```
+
+##### Response:
+
+```
+ order_id
+----------
+        1
 ```
 
 Now let's list all the orders and their owners.
@@ -348,7 +364,7 @@ FROM order_products
 (3 rows)
 ```
 
-Now, having the orderd_id you can get all the products for that order by adding `WHERE` clause:
+Now, having the orderd_id you can get all the products for that specific order by adding `WHERE` clause:
 
 ```
 ... WHERE orders.order_id = 1;
@@ -370,24 +386,36 @@ Result:
 ERROR:  update or delete on table "products" violates foreign key constraint "order_products_product_id_fkey" on table "order_products"
 DETAIL:  Key (product_id)=(1) is still referenced from table "order_products".
 ```
+
 As you see, constraint `ON DELETE RESTRICT` prevents us from deleting the product.
 
 2. Delete the user with the id `1`.
+
 ```postgresql
-DELETE FROM users WHERE telegram_id = 1;
+DELETE
+FROM users
+WHERE telegram_id = 1;
 ```
 
 Result:
+
 ```
 DELETE 1
 ```
 
 We successfully deleted the user, his/her `orders` and `order_products` records by just one command.
-```postgresql
-select * from order_products;
 
+```postgresql
+select *
+from order_products;
+```
+
+##### Response:
+```
  order_id | product_id | quantity 
 ----------+------------+----------
 
 (0 rows)
 ```
+
+Well done! Now you know how to create related tables and how to extract data from them!

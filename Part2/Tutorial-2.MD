@@ -4,6 +4,16 @@ This is not a full tutorial, it's just a brief introduction to PostgreSQL and a 
 
 # Part 2. Advanced data selection.
 
+## Preparing the data.
+
+```postgresql
+INSERT INTO users (telegram_id, full_name, created_at)
+VALUES (1, 'John Doe', '2022-06-19 04:24:16.775551'),
+       (2, 'Jane Doe', '2022-06-19 04:24:16.775551'),
+       (3, 'John Smith', '2022-06-19 04:24:16.775551'),
+       (4, 'Jane Smith', '2022-06-19 04:24:16.775551');
+```
+
 ## Ordering Data
 
 You can sort data in PostgreSQL using the `ORDER BY` clause with `SELECT` statement.
@@ -71,7 +81,7 @@ ALTER TABLE users
 
 UPDATE users
 SET role = 'admin'
-WHERE telegram_id == 1;
+WHERE telegram_id = 1;
 ```
 
 #### Example 1
@@ -255,7 +265,7 @@ FROM users;
 
 ##### Response
 
-You can see that there are duplicate values in the `role` column.
+You can see that there are duplicate values in the `role` column, because it shows roles for all users.
 
 ```
 role  
@@ -286,24 +296,26 @@ role
 (2 rows)
 ```
 
-
-
 ## Aliasing outputs
 
-You can use the `AS` clause to set a specific name for selected data. 
-This is useful if you want to get an output with a different name than the column name or give a name to an aggregated value.
+You can use the `AS` clause to set a specific name for selected data.
+This is useful if you want to get an output with a different name than the column name or give a name to an aggregated
+value.
 
 > Syntax: `SELECT some_func(column_name1) AS alias_name, column_name2 FROM table_name;`
 
 #### Example 1
+
 Let's get the number of users by their role:
+
 ```postgresql
 SELECT role, COUNT(telegram_id) AS number_of_users
 FROM users
-GROUP BY role;
+GROUP BY role; 
 ```
 
 ##### Response
+
 ```
  role  | number_of_users 
 -------+-----------------
@@ -311,3 +323,5 @@ GROUP BY role;
  user  |               3
 
 ```
+
+Well done! You learned how to use Advanced Selection and Filtering.
