@@ -9,12 +9,18 @@ This is not a full tutorial, it's just a brief introduction to PostgreSQL and a 
 At some point you will need to store related entities in the database.
 These may include:
 
-- Users that somehow relate to other users (Referrals, ...)
-- Orders that owned by users
-- Items that orders contain
+- Users that may somehow relate to some other users (Referrals, ...);
+- Orders that owned by (or related to) some users;
+- Different related items that orders contain;
 
 These are better represented by the diagram below:
 ![img.png](img.png)
+
+> **Note:**
+>
+> Draw a diagraw **every time** when you need to create a new database.
+>
+> You can use specific tools to create diagrams (e.g. DBDesigner).
 
 Here we created 4 interconnected tables:
 
@@ -46,7 +52,7 @@ Here we created 4 interconnected tables:
 - `product_id`
 - `quantity`
 
-Why do we need to create these tables?
+Why do we need to create so many tables?
 Because we need to follow specific rules for the relationship between the tables.
 
 There are 3 types of relationships:
@@ -61,7 +67,7 @@ One record in one table is related to one record in another table.
 
 > Note: **No duplicates**.
 
-Example (not in our diagram):
+#### Example (not in our diagram):
 Here we have 3 users and each user has a unique password.
 
 ```
@@ -82,7 +88,7 @@ cannot be two orders with the same `order_id`.
 
 > Note: **Duplicates allowed in the `user_id` column**.
 
-Example:
+#### Example:
 Here we have a user with the id `1` and he has 3 different orders.
 
 ```
@@ -103,7 +109,7 @@ allow creating intercrossing links between two tables `orders` and `products`.
 
 > Note: **Duplicates allowed in both columns**.
 
-Example:
+#### Example:
 Here we have 3 orders with 1 product in 1st, 3 products in 2nd order and 2 products in 3rd order.
 
 ```
@@ -121,8 +127,8 @@ Here we have 3 orders with 1 product in 1st, 3 products in 2nd order and 2 produ
 
 ## Foreign keys and Joining tables
 
-Now we need to create these tables with the correct relationships. We need to create a `foreign key` for each table that
-references the primary key of the other table.
+Now we need to create these tables with the correct relationships. We need to create a `FOREIGN KEY` column for each
+table **that references the primary key of the other** table.
 
 > **Note:**
 >
@@ -207,13 +213,17 @@ So we still need to specify the columns that are connecting the tables:
 
 ```ON table2.primary_key = table1.foreign_key```
 
-Let's see the user's name and his referrer's name. Since we are connecting 'users' table with itself we also need to
-specify the alias for the second table. We will call it 'ref':
+Let's see each user's name and his referrer's name. Since we are connecting 'users' table with itself we also need to
+specify the alias for the second table. We will call it 'ref'.
+
+Let's specify what we mean then saying that we want to connect tables. We want to get the result of
+the `SELECT users.full_name` statement, but also add to each row the respective `ref.full_name` column for the user that
+has the same `telegram_id` as the `users.referrer_id` column.
 
 ```postgresql
 SELECT users.full_name AS "user", ref.full_name AS referrer
 FROM users
-         JOIN users AS ref ON ref.telegram_id = users.referrer_id;
+         LEFT OUTER JOIN users AS ref ON ref.telegram_id = users.referrer_id;
 ```
 
 ##### Response:
@@ -225,6 +235,99 @@ FROM users
  
 (1 row)
 ```
+
+##### Explanation:
+This type of join is called `INNER JOIN`, it is standard when you write `JOIN`, but there are many other types of joins.
+
+### Types of joins
+
+By inclusion of data:
+
+- `INNER JOIN` - Standard. Will only return rows that have a match in both tables by `ON` clause.
+- `OUTER JOIN` - Will return all rows from one of the tables, even if they don't have a match with the
+  second table. See difference below.
+- `FULL JOIN` - Will return rows from both tables, even if they don't have a match.
+
+By statement side:
+
+- `LEFT (OUTER) JOIN` - Will return all rows written in `FROM` statement (_left-side_). If there is no match in
+  the right table, the columns will be filled with `NULL`.
+- `RIGHT (OUTER) JOIN` - Will return all rows written in `JOIN` statement (_right-side_). If there is no match
+  in the left table, the columns will be filled with `NULL`.
+
+#### Syntax examples:
+
+```postgresql
+SELECT table1.column1, ..., table2.column1, ...
+    FROM table1
+    LEFT JOIN table2
+ON table2.primary_key = table1.foreign_key;
+
+SELECT table1.column1, ..., table2.column1, ...
+    FROM table1
+    RIGHT OUTER JOIN table2
+ON table2.primary_key = table1.foreign_key;
+
+SELECT table1.column1, ..., table2.column1, ...
+    FROM table1
+    FULL OUTER JOIN table2
+ON table2.primary_key = table1.foreign_key;
+
+SELECT table1.column1, ..., table2.column1, ...
+    FROM table1
+    JOIN table2
+ON table2.primary_key = table1.foreign_key;
+```
+
+#### Difference between `INNER JOIN` and `OUTER JOIN`
+
+Let's repeat the same query but with `OUTER JOIN` instead of `INNER JOIN`.
+
+```postgresql
+SELECT users.full_name AS "user", ref.full_name AS referrer
+FROM users
+         LEFT OUTER JOIN users AS ref ON ref.telegram_id = users.referrer_id;
+```
+
+##### Response:
+
+```
+   user   | referrer 
+----------+----------
+ John Doe | 
+ Jane Doe | John Doe
+ 
+(2 rows)
+```
+
+##### Explanation:
+You can see that the referrer atribute is missing for the user John Doe, because he doesn't have a matching referrer.
+
+#### Difference between `LEFT (OUTER) JOIN` and `RIGHT (OUTER) JOIN`
+
+Let's repeat the same query but with `LEFT (OUTER) JOIN` instead of `RIGHT (OUTER) JOIN`.
+
+```postgresql
+SELECT users.full_name AS "user", ref.full_name AS referrer
+FROM users
+         RIGHT JOIN users AS ref ON ref.telegram_id = users.referrer_id;
+```
+
+##### Response:
+
+```
+   user   | referrer 
+----------+----------
+ Jane Doe | John Doe
+          | Jane Doe
+          
+(2 rows)
+```
+
+##### Explanation:
+You can see that now the user (referral) atribute is missing for the user Jane Doe, because she doesn't have a
+matching **referral**. So we've got all records from the second table, but records for missing attributes in the first
+are filled with `NULL`.
 
 ### Table orders:
 
@@ -411,6 +514,7 @@ from order_products;
 ```
 
 ##### Response:
+
 ```
  order_id | product_id | quantity 
 ----------+------------+----------

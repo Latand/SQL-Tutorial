@@ -30,6 +30,16 @@ FROM users
          JOIN users AS ref ON ref.telegram_id = users.referrer_id;
 
 
+SELECT users.full_name AS "user", ref.full_name AS referrer
+FROM users
+         LEFT OUTER JOIN users AS ref ON ref.telegram_id = users.referrer_id;
+
+
+SELECT users.full_name AS "user", ref.full_name AS referrer
+FROM users
+         RIGHT JOIN users AS ref ON ref.telegram_id = users.referrer_id;
+
+
 CREATE TABLE orders
 (
     order_id   SERIAL PRIMARY KEY,

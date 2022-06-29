@@ -7,9 +7,9 @@ This is not a full tutorial, it's just a brief introduction to PostgreSQL and a 
 ## How data is stored in PostgreSQL?
 
 - To store information in a database, you need to create a **table**.
-- Tables always contain rows and columns.
-- Rows are called records and contain different data.
-- Columns separate data in one row by different types.
+- Tables always contain rows and columns. Tables also called _'relations'_
+- Rows are called records and contain different data. Also called _'tuples'_.
+- Columns separate data in one row by different types. Also called _'fields/attributes'_.
 - Rows are horizontal.
 - Columns are vertical.
 
@@ -42,6 +42,26 @@ Every action in PostgreSQL is performed by some SQL statement.
 >
 > - SQL **commands are case-insensitive**. You can write `SELECT`/`select`/`Select` and all will work.
 > - **Indentation is unimportant**. You can put newlines and tabs wherever you want.
+> - SQL is very effective for SWIFT storing and retrieving data.
+
+### SQL subtypes:
+
+You can use SQL to manipulate database/table structure and settings, and most often **to manipulate data**.
+
+There are different subtypes of SQL:
+
+- DDL (Data Definition Language) - used to create/alter/drop tables.
+- DML (Data Manipulation Language) - used to insert/update/delete data.
+- DCL (Data Control Language) - used to grant/revoke privileges for users.
+- TCL (Transaction Control Language) - used to start/commit/rollback transactions.
+
+> **Note:**
+> - Transactions are used to prevent data loss. You can run multiple SQL statements in one transaction. If one of them
+    fails, all of them will be rolled back. This is useful for example when you want to insert data into one table, but
+    you don't want to insert data into second table if the first one fails.
+> - Priviledges are used to grant/revoke access to different commands for users. You can restrict one user to
+    use `INSERT`,
+    `UPDATE`, `DELETE` in a table, but allow to `SELECT` data.
 
 ### Actions
 
@@ -66,10 +86,12 @@ Firstly, to perform some action you need to create a table.
    supported by your database system. _Example: PostgreSQL supports `BIGINT`, `VARCHAR`, `TIMESTAMP`, respectively_.
 5. Determine which [constraints](https://www.tutorialspoint.com/postgresql/postgresql_constraints.htm) you want to apply
    to your table. _Example: You can use `PRIMARY KEY` to make sure that each row has a unique and not empty identifier.
-   In this example it is `telegram_id`_
+   PostgreSQL will throw an error if you try to insert a duplicate identifier. In this example it is `telegram_id`_
 6. If you want to create a `PRIMARY KEY` that will be automatically filled `(e.g. 1, 2, 3 ...)`, you can use `SERIAL`
    datatype with `PRIMARY KEY`.
    _Example: `telegram_id SERIAL PRIMARY KEY`_
+7. Determine which columns are nullable, and which ones are not. _Example: You can use `NOT NULL` to make sure that
+   each row has a `telegram_id` and `full_name`._
 
 > Syntax: `CREATE TABLE table_name (column_name data_type, column_name data_type, ...);`
 
@@ -78,6 +100,21 @@ Firstly, to perform some action you need to create a table.
 > You can set the default value of a column by adding a `DEFAULT` clause after the data type.
 >
 > You can set additional constraints for a column.
+
+#### Data types
+
+- `INTEGER` - integer 32-bit. Same as Python `int` type.
+- `BIGINT` - integer 64-bit. Same as Python `int` type.
+- `FLOAT` - Same as Python `float` type.
+- `BOOLEAN` - Same as Python `bool` type.
+- `TEXT` - Same as Python `str` type of unknown length.
+- `VARCHAR` - Same as Python `str` type of fixed length.
+- `DATE` - Same as Python `datetime.date` type.
+- `TIME` - Same as Python `datetime.time` type.
+- `TIMESTAMP` - Same as Python `datetime.datetime` type.
+- `SERIAL` - An autoincrementing integer (e.g. 1, 2, 3 ...). It will be calculated automatically by PostgreSQL.
+- `NULL` - allows to store NULL values. Same as Python `None` type.
+- other types.
 
 #### To create a table you need to:
 
@@ -158,7 +195,7 @@ DROP TABLE users;
 >- For example, if you want to insert a `INTEGER` value, you must write
    > `1` instead of `1.0`
 >
->- If you want to insert a `VARCHAR` value, you must put a string inside single quotes.
+>  - If you want to insert a `VARCHAR/TEXT` value, you must put a string inside single quotes.
 >
 >- If you want to insert a `TIMESTAMP` value, you must use the following format:
    > `'YYYY-MM-DD HH:MM:SS'`, where `YYYY` is year, `MM` is month, `DD` is day, `HH` is hour, `MM` is minute, `SS` is
