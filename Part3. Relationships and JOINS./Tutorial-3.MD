@@ -55,11 +55,12 @@ Here we created 4 interconnected tables:
 Why do we need to create so many tables?
 Because we need to follow specific rules for the relationship between the tables.
 
-There are 3 types of relationships:
+There are 4 types of relationships:
 
 - One-to-one
 - One-to-many
 - Many-to-many
+- Self-referencing 
 
 ### One-to-one
 
@@ -169,7 +170,7 @@ CREATE TABLE users
 ```
 
 You can see that we have a `referrer_id` column and created a `FOREIGN KEY` for it that references the `telegram_id`
-column of the `users` table.
+column of the `users` table. It is Self-referencing relationship.
 
 > **Note:**
 >
