@@ -25,7 +25,7 @@ Example of a table:
 
 ### SQL Syntax
 
-Every action in PostgreSQL is performed by some SQL statement.
+Every action in PostgreSQL is performed by some SQL statement. Every statement <u>must be separated</u> by semicolon: `;`
 
 **Most common SQL** statements are written in the following format:
 
