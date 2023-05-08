@@ -12,14 +12,14 @@ To use SQL efficiently in your bots you need 2 things:
 
 > **Note:**
 >
-> We will be using syntax for SQLAlchemy v2.0 for this tutorial. However, the latest version of SQLAlchemy is 1.4.39
+> We will be using syntax for SQLAlchemy v2.0 for this tutorial. 
 
 _This is not a full tutorial, so you might like to check out
 the [SQLAlchemy tutorial](https://docs.sqlalchemy.org/en/20/tutorial/index.html) later._
 
 First off, let's build a virtual environment and install all the dependencies.
 
-We will be using the latest version, Python 3.10
+We will be using the latest stable version, Python 3.10.
 
 ### Ubuntu installation:
 
@@ -34,8 +34,8 @@ python3 -m virtualenv venv
 source venv/bin/activate
 
 # No we can install all the dependencies into the virtual environment
-# Let's install psycopg2==binary-2.9.3 (syncronous driver), asyncpg==0.25.0 (asyncronous driver), also SQLAlchemy==1.4.39
-pip3 install psycopg2-binary==2.9.3 asyncpg==0.25.0 SQLAlchemy==1.4.39
+# Let's install psycopg2==binary-2.9.3 (synchronous driver), asyncpg==0.25.0 (asynchronous driver), also SQLAlchemy~=2.0
+pip3 install psycopg2-binary==2.9.3 asyncpg==0.25.0 SQLAlchemy~=2.0
 ```
 
 Our dependencies are ready to use!
@@ -43,7 +43,7 @@ Our dependencies are ready to use!
 ## Connecting to a database
 
 In order to connect to our database we need to
-use [SQLAlchemy Enigne](https://docs.sqlalchemy.org/en/20/tutorial/engine.html).
+use [SQLAlchemy Engine](https://docs.sqlalchemy.org/en/20/tutorial/engine.html).
 It is created by using the `create_engine` function.
 
 ```python
@@ -86,7 +86,7 @@ Be aware that we are not yet connected to the database, it will be done when we 
 
 As you may have learnt, SQL has Transaction Control Language (TCL) to manage transactions.
 
-Transcation - is a set of commands that are executed in a single unit of work.
+Transaction - is a set of commands that are executed in a single unit of work.
 
 - A transaction is started by calling the `begin()` method.
 - A transaction is committed by calling the `commit()` method.
@@ -95,7 +95,7 @@ Transcation - is a set of commands that are executed in a single unit of work.
 You can insert some rows and then rollback the transaction, so the rows will not be inserted, otherwise you may commit
 the transaction and all changed will be saved.
 
-In the trancastions you can also alter tables structure and rollback that as well.
+In the transactions you can also alter tables structure and rollback that as well.
 
 ### Syntax for transactions:
 
@@ -209,7 +209,7 @@ See, now you know that row-objects may be transformed to different types of obje
 
 ## Working with Result
 
-There are different ways you can retireve the result of a query. Not all results you need are in a form of a table.
+There are different ways you can retrieve the result of a query. Not all results you need are in a form of a table.
 
 Sometimes you want to retrieve a single row, or a single column at once.
 
